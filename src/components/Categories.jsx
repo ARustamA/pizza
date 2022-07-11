@@ -1,21 +1,33 @@
-import '../scss/app.scss'
 import React from 'react'
+import { Link } from 'react-router-dom'
+
+
+import '../scss/app.scss'
+
 
 const Categories = () => {
-   const [activeIndex, setActiveIndex]=React.useState(0)
-   const onClickActive = (index)=>{
+   const [activeIndex, setActiveIndex] = React.useState(0)
+   const categories = [
+      "Все",
+      "Мясные",
+      "Вегетарианская",
+      "Гриль",
+      "Острые",
+      "Закрытые"
+   ]
+   const onClickActive = (index) => {
       setActiveIndex(index)
    }
    return (
       <>
-         <div className="categories">
+         <div className="categories" >
             <ul>
-               <li onClick={()=>onClickActive(0)} className={activeIndex===0 ? 'active' : ''}>Все</li>
-               <li onClick={()=>onClickActive(1)} className={activeIndex===1 ? 'active' : ''}>Мясные</li>
-               <li onClick={()=>onClickActive(2)} className={activeIndex===2 ? 'active' : ''}>Вегетарианская</li>
-               <li onClick={()=>onClickActive(3)} className={activeIndex===3 ? 'active' : ''}>Гриль</li>
-               <li onClick={()=>onClickActive(4)} className={activeIndex===4 ? 'active' : ''}>Острые</li>
-               <li onClick={()=>onClickActive(5)} className={activeIndex===5 ? 'active' : ''}>Закрытые</li>
+               {
+                  categories.map((name, index) => (<li key={index} onClick={() => onClickActive(index)}
+                     className={activeIndex === index  ? 'active' : ''}>
+                     {name}
+                  </li>)
+                  )}
             </ul>
          </div>
       </>

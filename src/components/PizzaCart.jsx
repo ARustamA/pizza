@@ -1,35 +1,47 @@
-import { useState } from 'react'
+import axios from 'axios'
+import React from 'react'
+import { AppContext } from '../App'
+
 import '../scss/app.scss'
 
 
 const PizzaCart = () => {
-   const [pizzaCount, setPizzaCount] = useState(0)
-
+   const{ pizzaItems} = React.useContext(AppContext)
+   
+   const [pizzaCount, setPizzaCount] = React.useState(0)
+   const [activeSizesIndex, setActiveSizesIndex] = React.useState(0)
+   
    const onClickAdd = ()=>{
       setPizzaCount(pizzaCount+1)
    }
+   const onClickActiveSizes = (index) => {
+      setActiveSizesIndex(index)
+   }
+   
    return (
       <>
-         <div className="pizza-block">
+         {pizzaItems.map((obj)=>(
+            <div className="pizza-block" key={obj.id}>
             <img
                className="pizza-block__image"
-               src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+               src={obj.imageUrl}
                alt="Pizza"
             />
-            <h4 className="pizza-block__title">Чизбургер-пицца</h4>
+            <h4 className="pizza-block__title">{obj.title}</h4>
             <div className="pizza-block__selector">
                <ul>
-                  <li className="active">тонкое</li>
+                     <li className="active">тонкое</li>
                   <li>традиционное</li>
                </ul>
                <ul>
-                  <li className="active">26 см.</li>
-                  <li>30 см.</li>
-                  <li>40 см.</li>
+                  { 
+                  obj.sizes.map((name, index) => (
+                     <li key={index} onClick={() => onClickActiveSizes(index)}
+                     className={activeSizesIndex === index  ? 'active' : ''}>{name} см.</li>))}
                </ul>
             </div>
             <div className="pizza-block__bottom">
-               <div className="pizza-block__price">от 395 ₽</div>
+               <div className="pizza-block__price">от {obj.price} ₽</div>
                <button onClick={onClickAdd} className="button button--outline button--add">
                   <svg
                      width="12"
@@ -47,7 +59,11 @@ const PizzaCart = () => {
                   <i>{pizzaCount}</i>
                </button>
             </div>
-         </div>
+         </div> 
+         )
+         )}
+         
+         
       </>
    )
 
