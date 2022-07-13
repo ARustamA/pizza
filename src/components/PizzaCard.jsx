@@ -5,22 +5,22 @@ import { AppContext } from '../App'
 import '../scss/app.scss'
 
 
-function PizzaCart ({id, imageUrl, title, price, sizes, types, }) {
+function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
    // const{ pizzaItems} = React.useContext(AppContext)
-   
+
    const [pizzaCount, setPizzaCount] = React.useState(0)
    const [activeSizesIndex, setActiveSizesIndex] = React.useState(0)
    const [pizzaFormIndex, setPizzaFormIndex] = React.useState(0)
-   const typeOfDough = ['тонкое','традиционное']
-   
-   const onClickAdd = ()=>{
-      setPizzaCount(pizzaCount+1)
+   const typeOfDough = ['тонкое', 'традиционное']
+
+   const onClickAdd = () => {
+      setPizzaCount(pizzaCount + 1)
    }
 
    return (
       <>
-         
-            <div className="pizza-block" key={id}>
+
+         <div className="pizza-block" key={id}>
             <img
                className="pizza-block__image"
                src={imageUrl}
@@ -29,15 +29,15 @@ function PizzaCart ({id, imageUrl, title, price, sizes, types, }) {
             <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                <ul>
-               {types.map((index) => (
-                     <li key={index} onClick={()=>setPizzaFormIndex(index)}
-                     className={pizzaFormIndex === index  ? 'active' : ''}>{typeOfDough[index]} </li>))}
+                  {types.map((index) => (
+                     <li key={index} onClick={() => setPizzaFormIndex(index)}
+                        className={pizzaFormIndex === index ? 'active' : ''}>{typeOfDough[index]} </li>))}
                </ul>
                <ul>
-                  { 
-                  sizes.map((name, index) => (
-                     <li key={index} onClick={() => setActiveSizesIndex(index)}
-                     className={activeSizesIndex === index  ? 'active' : ''}>{name} см.</li>))}
+                  {
+                     sizes.map((name, index) => (
+                        <li key={index} onClick={() => setActiveSizesIndex(index)}
+                           className={activeSizesIndex === index ? 'active' : ''}>{name} см.</li>))}
                </ul>
             </div>
             <div className="pizza-block__bottom">
@@ -59,8 +59,8 @@ function PizzaCart ({id, imageUrl, title, price, sizes, types, }) {
                   <i>{pizzaCount}</i>
                </button>
             </div>
-         </div> 
-                  
+         </div>
+
       </>
    )
 
