@@ -1,19 +1,21 @@
+import { Link } from 'react-router-dom'
 import '../scss/app.scss'
 
-const Header = () => {
+function Header () {
    return (
       <>
          <div className="header">
             <div className="container">
                <div className="header__logo">
                   <img width="38" src="img/pizza-logo.svg" alt="Pizza logo" />
-                  <div>
+                  <Link to=''>
                      <h1>React Pizza</h1>
                      <p>самая вкусная пицца во вселенной</p>
-                  </div>
+                  </Link>
                </div>
                <div className="header__cart">
-                  <a href="/cart.html" className="button button--cart">
+                  <Link to="/cart" >
+                  <div className="button button--cart">
                      <span>520 ₽</span>
                      <div className="button__delimiter"></div>
                      <svg
@@ -46,7 +48,8 @@ const Header = () => {
                         />
                      </svg>
                      <span>3</span>
-                  </a>
+                  </div>
+                  </Link>
                </div>
             </div>
          </div>

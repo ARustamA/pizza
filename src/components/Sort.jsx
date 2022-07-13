@@ -1,9 +1,20 @@
+import React from 'react'
 import '../scss/app.scss'
-const Sort = () => {
+
+function Sort  () {
+   const [sortActiveIndex, setSortActiveItems]=React.useState(0)
+   const [open, setOpen]=React.useState(false)
+   // const sortArr = [ {name: "популярности",id:1}, {name:"цене",id:2}, {name: "алфавиту",id:3}]
+   const sortArr = ["популярности","цене","алфавиту"]
+
+   const onSort = (i) => {
+      setSortActiveItems(i) 
+      setOpen(false)
+   }
    return (
       <>
          <div className="sort">
-            <div className="sort__label">
+            <div className="sort__label" >
                <svg
                   width="10"
                   height="6"
@@ -17,15 +28,18 @@ const Sort = () => {
                   />
                </svg>
                <b>Сортировка по:</b>
-               <span>популярности</span>
+               <span onClick={()=>setOpen(!open)}>{sortArr[sortActiveIndex]}</span>
             </div>
+            {open && 
             <div className="sort__popup">
                <ul>
-                  <li className="active">популярности</li>
-                  <li>цене</li>
-                  <li>алфавиту</li>
+               {
+                  sortArr.map((name, i) => (<li key={i} onClick={()=>onSort(i)}
+                     className={sortActiveIndex === i  ? 'active' : ''}>
+                     {name}
+                  </li>))}
                </ul>
-            </div>
+            </div> }
          </div>
       </>
    )

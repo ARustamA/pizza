@@ -1,47 +1,47 @@
-import axios from 'axios'
+
 import React from 'react'
 import { AppContext } from '../App'
 
 import '../scss/app.scss'
 
 
-const PizzaCart = () => {
-   const{ pizzaItems} = React.useContext(AppContext)
+function PizzaCart ({id, imageUrl, title, price, sizes, types, }) {
+   // const{ pizzaItems} = React.useContext(AppContext)
    
    const [pizzaCount, setPizzaCount] = React.useState(0)
    const [activeSizesIndex, setActiveSizesIndex] = React.useState(0)
+   const [pizzaFormIndex, setPizzaFormIndex] = React.useState(0)
+   const typeOfDough = ['тонкое','традиционное']
    
    const onClickAdd = ()=>{
       setPizzaCount(pizzaCount+1)
    }
-   const onClickActiveSizes = (index) => {
-      setActiveSizesIndex(index)
-   }
-   
+
    return (
       <>
-         {pizzaItems.map((obj)=>(
-            <div className="pizza-block" key={obj.id}>
+         
+            <div className="pizza-block" key={id}>
             <img
                className="pizza-block__image"
-               src={obj.imageUrl}
+               src={imageUrl}
                alt="Pizza"
             />
-            <h4 className="pizza-block__title">{obj.title}</h4>
+            <h4 className="pizza-block__title">{title}</h4>
             <div className="pizza-block__selector">
                <ul>
-                     <li className="active">тонкое</li>
-                  <li>традиционное</li>
+               {types.map((index) => (
+                     <li key={index} onClick={()=>setPizzaFormIndex(index)}
+                     className={pizzaFormIndex === index  ? 'active' : ''}>{typeOfDough[index]} </li>))}
                </ul>
                <ul>
                   { 
-                  obj.sizes.map((name, index) => (
-                     <li key={index} onClick={() => onClickActiveSizes(index)}
+                  sizes.map((name, index) => (
+                     <li key={index} onClick={() => setActiveSizesIndex(index)}
                      className={activeSizesIndex === index  ? 'active' : ''}>{name} см.</li>))}
                </ul>
             </div>
             <div className="pizza-block__bottom">
-               <div className="pizza-block__price">от {obj.price} ₽</div>
+               <div className="pizza-block__price">от {price} ₽</div>
                <button onClick={onClickAdd} className="button button--outline button--add">
                   <svg
                      width="12"
@@ -60,10 +60,7 @@ const PizzaCart = () => {
                </button>
             </div>
          </div> 
-         )
-         )}
-         
-         
+                  
       </>
    )
 
