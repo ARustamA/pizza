@@ -354,3 +354,70 @@ body {
     font-size: 22px;
   }
 }
+.search{
+  position: relative;
+  left: -80px;
+  .searchIcon{
+    width: 32px;
+    height: 32px;
+    opacity: 0.4;
+    position: absolute;
+    top: 10px;
+    left: 7px;
+  }
+  .searchInput{
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 12px 15px;
+    width: 400px;
+    border-radius: 10px;
+    font-size: 16px;
+    padding-left: 40px;
+    transition: all 0.15s ease-in-out;
+
+    
+  } 
+  .close{
+    
+    width: 23px;
+    height: 23px;
+    opacity: 0.4;
+    position: absolute;
+    top: 13px;
+    right: 7px;
+    cursor: pointer;
+  }
+  &:focus{
+    opacity: 0.8;
+    
+  }
+}.pageCount {
+  li {
+    display: inline-block;
+
+    a {
+      display: inline-block;
+      color: #fe5f1e;
+      text-align: center;
+      width: 45px;
+      height: 45px;
+      line-height: 25px;
+      padding: 10px;
+      border: 1px solid #fe5f1e;
+      border-radius: 30px;
+      margin-right: 10px;
+
+      &:hover {
+        background-color: #fe5f1e;
+        color: #fff;
+      }
+    }
+  }
+  :global{
+    .selected{
+      a{
+        background-color: #fe5f1e;
+        color: #fff;
+      }
+    }
+  }
+}

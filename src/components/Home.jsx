@@ -1,18 +1,23 @@
 import React from 'react'
 import axios from 'axios'
 
+
 import Skeleton from './Skeletone'
 import PizzaCart from './PizzaCard'
 import Categories from './Categories';
 import Sort from './Sort';
+import Pagination from './Pagination';
 
 import '../scss/app.scss'
 
-function Home() {
+
+
+function Home({searchValue}) {
    const [categoriesId, setCategoriesId] = React.useState(0)
    const [sortIndex, setSortItems]=React.useState({name:"популярности", sortProperty:'rating'})
    const [pizzaItems, setPizzaItems] = React.useState([])
    const [isLoading, setIsLoading] = React.useState(true)
+   const [currentPage, setCurrentPage] = React.useState(1)
 
 
    React.useEffect(() => {
@@ -22,8 +27,10 @@ function Home() {
             const order = sortIndex.sortProperty.includes('-') ? 'asc' : 'desc'
             const sorty = sortIndex.sortProperty.replace('-','')
             const category = categoriesId > 0 ? `category=${categoriesId}` : ''
-            const { data } = await axios.get(`https://62cbce7d8042b16aa7c2c215.mockapi.io/items?${
-               category}&sortBy=${sorty}&order=${order}`)
+            const search = searchValue ? `&search=${searchValue}` : ''
+
+            const { data } = await axios.get(`https://62cbce7d8042b16aa7c2c215.mockapi.io/items?page=${currentPage}&limit=4&${
+               category}&sortBy=${sorty}&order=${order}${search}`)
             
             setPizzaItems(data)
             setIsLoading(false)
@@ -33,8 +40,18 @@ function Home() {
          }
       }
       generalData()
-      window.scrollTo(0, 0)
-   }, [categoriesId, sortIndex])
+      // window.scrollTo(0, 0)
+   }, [categoriesId, sortIndex, searchValue,currentPage])
+   
+      const pizzasAr = pizzaItems.map((obj) => (<PizzaCart key={obj.id} {...obj} />))
+
+      // .filter((obj)=>{
+      //    if (obj.title.toLowerCase().includes(searchValue.toLowerCase())){
+      //       return true
+      //    }
+      //    return false
+      // })
+      const skeletons = [... new Array(currentPage)].map((_, i) => (<Skeleton key={i} />))
 
    return (
       <>
@@ -46,9 +63,9 @@ function Home() {
                <Sort sortIndex={sortIndex} onClickSort={(id)=>setSortItems(id)}/>
             </div>
             <div className="content__items">
-               {(isLoading ? [... new Array(8)].map((_, i) => (<Skeleton key={i} />))
-                  : pizzaItems.map((obj) => (<PizzaCart key={obj.id} {...obj} />)))}
+               {(isLoading ? skeletons : pizzasAr)}
             </div>
+            <Pagination  onChangePage={(number)=>setCurrentPage(number)}/>
          </div>
       </>
    )
