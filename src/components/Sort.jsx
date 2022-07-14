@@ -1,16 +1,22 @@
 import React from 'react'
 import '../scss/app.scss'
 
-function Sort  () {
-   const [sortActiveIndex, setSortActiveItems]=React.useState(0)
+function Sort  ({sortIndex, onClickSort}) {
+
    const [open, setOpen]=React.useState(false)
-   // const sortArr = [ {name: "популярности",id:1}, {name:"цене",id:2}, {name: "алфавиту",id:3}]
-   const sortArr = ["популярности","цене","алфавиту"]
+   const sortArr = [ {name:"популярности(DESC)",sortProperty:"rating"},
+                     {name:"популярности(ASC)",sortProperty:"-rating"},
+                     {name:"цене(DESC)",sortProperty:"price"},
+                     {name:"цене(ASC)",sortProperty:"-price"},
+                     {name:"алфавиту(DESC)",sortProperty:"title"},
+                     {name:"алфавиту(ASC)",sortProperty:"-title"}]
+   
 
    const onSort = (i) => {
-      setSortActiveItems(i) 
+      onClickSort(i) 
       setOpen(false)
    }
+   // console.log(sortArr.sortProperty)
    return (
       <>
          <div className="sort">
@@ -28,15 +34,15 @@ function Sort  () {
                   />
                </svg>
                <b>Сортировка по:</b>
-               <span onClick={()=>setOpen(!open)}>{sortArr[sortActiveIndex]}</span>
+               <span onClick={()=>setOpen(!open)}>{sortIndex.name}</span>
             </div>
             {open && 
             <div className="sort__popup">
                <ul>
                {
-                  sortArr.map((name, i) => (<li key={i} onClick={()=>onSort(i)}
-                     className={sortActiveIndex === i  ? 'active' : ''}>
-                     {name}
+                  sortArr.map((obj, i) => (<li key={i} onClick={()=>onSort(obj)}
+                     className={sortIndex.sortProperty === obj.sortProperty  ? 'active' : ''}>
+                     {obj.name}
                   </li>))}
                </ul>
             </div> }

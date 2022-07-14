@@ -1,17 +1,11 @@
 import React from 'react'
-
-import { AppContext } from '../App'
+import { Link } from 'react-router-dom'
 
 import '../scss/app.scss'
 
-
-
 function Cart() {
-   const { pizzaItems } = React.useContext(AppContext)
-
    return (
       <><div className="container container--cart">
-
          <div className="cart">
             <div className="cart__top">
                <h2 className="content__title">
@@ -74,11 +68,11 @@ function Cart() {
                   <span> Сумма заказа: <b>450 ₽</b> </span>
                </div>
                <div className="cart__bottom-buttons">
-                  <a className="button button--outline button--add go-back-btn" href="/">
+                  <Link to='/' className="button button--outline button--add go-back-btn" href="/">
                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7 13L1 6.93015L6.86175 1" stroke="#D3D3D3" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
                      </svg>
-                     <span>Вернуться назад</span></a>
+                     <span>Вернуться назад</span></Link>
                   <div className="button pay-btn">
                      <span>Оплатить сейчас</span>
                   </div>
