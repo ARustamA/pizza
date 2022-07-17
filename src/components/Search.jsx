@@ -1,15 +1,29 @@
 import React from 'react'
+import debounce from 'lodash.debounce'
+
 import { AppContext } from '../App'
 
 import '../scss/app.scss'
 
 const Search = () => {
-   const { searchValue, setSearchValue } = React.useContext(AppContext)
+   const [value, setValue] = React.useState('')
+   const { setSearchValue } = React.useContext(AppContext)
    const inputRef = React.useRef()
+
    const onClickClear = ()=>{
       setSearchValue('')
-      inputRef.current.focus()
+      setValue('')
+      inputRef.current.focus()  }
 
+   const updateSearchValue = React.useCallback
+   (  debounce((value) => { 
+         setSearchValue(value)
+      }, 250),
+   [],)
+
+   const onChangeInput = (event) => {
+      setValue(event.target.value)
+      updateSearchValue(event.target.value)
    }
 
    return (
@@ -23,10 +37,10 @@ const Search = () => {
          </svg>
          <input 
             ref={inputRef}
-            value={searchValue}
-            onChange={(event => setSearchValue(event.target.value))}
+            value={value}
+            onChange={onChangeInput}
             className='searchInput' placeholder='Поиск пиццы...' />
-         {searchValue && (
+         {value && (
             <svg className='close' onClick={onClickClear}
                data-name="Livello 1" id="Livello_1" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg"><title />
                <path d="M64,0a64,64,0,1,0,64,64A64.07,64.07,0,0,0,64,0Zm0,122a58,58,0,1,1,58-58A58.07,58.07,0,0,1,64,122Z" />
