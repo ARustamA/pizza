@@ -1,24 +1,29 @@
 import React from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+
+import {setSortItems } from '../redux/slices/filterSlice'
+
 import '../scss/app.scss'
 
-function Sort({ sortIndex, onClickSort }) {
+const sortArr = [{ name: "популярности(DESC)", sortProperty: "rating" },
+{ name: "популярности(ASC)", sortProperty: "-rating" },
+{ name: "цене(DESC)", sortProperty: "price" },
+{ name: "цене(ASC)", sortProperty: "-price" },
+{ name: "алфавиту(DESC)", sortProperty: "title" },
+{ name: "алфавиту(ASC)", sortProperty: "-title" }]
 
+function Sort() {
+
+   const sortIndex = useSelector((state) => state.filterSlice.sortIndex)
+   const dispatch =  useDispatch()
+   const onClickSort = (obj) => { 
+      dispatch(setSortItems(obj))
+      setOpen(false)   }
+   
    const [open, setOpen] = React.useState(false)
-   const sortArr = [{ name: "популярности(DESC)", sortProperty: "rating" },
-   { name: "популярности(ASC)", sortProperty: "-rating" },
-   { name: "цене(DESC)", sortProperty: "price" },
-   { name: "цене(ASC)", sortProperty: "-price" },
-   { name: "алфавиту(DESC)", sortProperty: "title" },
-   { name: "алфавиту(ASC)", sortProperty: "-title" }]
 
-   const onSort = (i) => {
-      onClickSort(i)
-      setOpen(false)
-   }
-   // console.log(sortArr.sortProperty)
    return (
-      <>
-         <div className="sort">
+      <> <div className="sort">
             <div className="sort__label" >
                <svg
                   width="10"
@@ -38,9 +43,8 @@ function Sort({ sortIndex, onClickSort }) {
             {open &&
                <div className="sort__popup">
                   <ul>
-                     {
-                        sortArr.map((obj, i) => (<li key={i} onClick={() => onSort(obj)}
-                           className={sortIndex.sortProperty === obj.sortProperty ? 'active' : ''}>
+                     { sortArr.map((obj, i) => (<li key={i} onClick={()=>onClickSort(obj)}
+                           className={sortIndex.sortProperty === obj ? 'active' : ''}>
                            {obj.name}
                         </li>))}
                   </ul>

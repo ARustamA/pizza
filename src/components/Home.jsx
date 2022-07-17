@@ -1,23 +1,26 @@
 import React from 'react'
 import axios from 'axios'
+import {useSelector, useDispatch} from 'react-redux'
 
-import Skeleton from './Skeletone'
+import Skeleton from './Skeleton'
 import PizzaCart from './PizzaCard'
-import Categories from './Categories';
-import Sort from './Sort';
-import Pagination from './Pagination';
+import Categories from './Categories'
+import Sort from './Sort'
+import Pagination from './Pagination'
+import { setCategoriesId} from '../redux/slices/filterSlice'
+import { AppContext } from '../App'
 
 import '../scss/app.scss' 
-import { AppContext } from '../App';
 
 function Home() {
-   const [categoriesId, setCategoriesId] = React.useState(0)
-   const [sortIndex, setSortItems] = React.useState({ name: "популярности", sortProperty: 'rating' })
+   const {categoriesId, sortIndex } = useSelector((state) => state.filterSlice)
+   const dispatch =  useDispatch()
+   const onClickCategories = (id) => { dispatch(setCategoriesId(id)) }
+      
    const [pizzaItems, setPizzaItems] = React.useState([])
    const [isLoading, setIsLoading] = React.useState(true)
    const [currentPage, setCurrentPage] = React.useState(1)
    const { searchValue } = React.useContext(AppContext)
-
    React.useEffect(() => {
       async function generalData() {
          try {
@@ -37,16 +40,9 @@ function Home() {
       }
       generalData()
       // window.scrollTo(0, 0)
-   }, [categoriesId, sortIndex, searchValue, currentPage])
+   }, [categoriesId, sortIndex.sortProperty, searchValue, currentPage])
 
    const pizzasAr = pizzaItems.map((obj) => (<PizzaCart key={obj.id} {...obj} />))
-
-   // .filter((obj)=>{
-   //    if (obj.title.toLowerCase().includes(searchValue.toLowerCase())){
-   //       return true
-   //    }
-   //    return false
-   // })
    const skeletons = [... new Array(currentPage)].map((_, i) => (<Skeleton key={i} />))
 
    return (
@@ -55,8 +51,8 @@ function Home() {
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__top">
                <Categories check={categoriesId}
-                  onClickCategories={(id) => setCategoriesId(id)} />
-               <Sort sortIndex={sortIndex} onClickSort={(id) => setSortItems(id)} />
+                  onClickCategories={onClickCategories} />
+               <Sort />
             </div>
             <div className="content__items">
                {(isLoading ? skeletons : pizzasAr)}
