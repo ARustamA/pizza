@@ -5,25 +5,35 @@ import {setSortItems } from '../redux/slices/filterSlice'
 
 import '../scss/app.scss'
 
-const sortArr = [{ name: "популярности(DESC)", sortProperty: "rating" },
-{ name: "популярности(ASC)", sortProperty: "-rating" },
-{ name: "цене(DESC)", sortProperty: "price" },
-{ name: "цене(ASC)", sortProperty: "-price" },
-{ name: "алфавиту(DESC)", sortProperty: "title" },
-{ name: "алфавиту(ASC)", sortProperty: "-title" }]
+export const sortArr = [
+      { name: "популярности(DESC)", sortProperty: "rating" },
+      { name: "популярности(ASC)", sortProperty: "-rating" },
+      { name: "цене(DESC)", sortProperty: "price" },
+      { name: "цене(ASC)", sortProperty: "-price" },
+      { name: "алфавиту(DESC)", sortProperty: "title" },
+      { name: "алфавиту(ASC)", sortProperty: "-title" }]
 
 function Sort() {
 
    const sortIndex = useSelector((state) => state.filterSlice.sortIndex)
    const dispatch =  useDispatch()
+   const sortRef = React.useRef()
    const onClickSort = (obj) => { 
       dispatch(setSortItems(obj))
       setOpen(false)   }
    
    const [open, setOpen] = React.useState(false)
 
+   React.useEffect(() => {
+      document.body.addEventListener('click', event=>{
+         if (!event.path.includes(sortRef.current)){
+            setOpen(false)
+         }
+      })
+   },[])
+
    return (
-      <> <div className="sort">
+      <> <div className="sort" ref={sortRef}>
             <div className="sort__label" >
                <svg
                   width="10"
