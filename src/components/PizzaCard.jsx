@@ -1,20 +1,30 @@
-
 import React from 'react'
-import { AppContext } from '../App'
+import {useSelector, useDispatch} from 'react-redux'
+
+import {addPizza} from '../redux/slices/cartSlice'
 
 import '../scss/app.scss'
 
 
 function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
-   // const{ pizzaItems} = React.useContext(AppContext)
+   // const { items } = useSelector((state) => state.cartSlice)
 
-   const [pizzaCount, setPizzaCount] = React.useState(0)
+   const dispatch = useDispatch()
    const [activeSizesIndex, setActiveSizesIndex] = React.useState(0)
    const [pizzaFormIndex, setPizzaFormIndex] = React.useState(0)
    const typeOfDough = ['тонкое', 'традиционное']
+   const cartItem = useSelector(state => 
+         state.cartSlice.items.find(obj => obj.id === id))
+         
+   const count = cartItem ? cartItem.count : 0
 
    const onClickAdd = () => {
-      setPizzaCount(pizzaCount + 1)
+      const item = {
+         id, imageUrl, title, price, 
+         sizes:activeSizesIndex, 
+         types:typeOfDough[pizzaFormIndex],
+      }
+      dispatch(addPizza(item))
    }
 
    return (
@@ -56,7 +66,7 @@ function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
                      />
                   </svg>
                   <span>Добавить</span>
-                  <i>{pizzaCount}</i>
+                  {count > 0 && <i>{count}</i> }
                </button>
             </div>
          </div>
