@@ -34,7 +34,7 @@ function Cart() {
                   </div>
                   <div className="cart__item-info">
                      <h3>Маргарита</h3>
-                     <p>тонкое, 26 см.</p>
+                     <p>тонкое, 26 см.</p> 
                   </div>
                   <div className="cart__item-count">
                      <button disabled="" className="button button--outline button--circle cart__item-count-minus">

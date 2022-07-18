@@ -25,11 +25,18 @@ function Sort() {
    const [open, setOpen] = React.useState(false)
 
    React.useEffect(() => {
-      document.body.addEventListener('click', event=>{
+      
+      const closePopup = (event) => {
          if (!event.path.includes(sortRef.current)){
-            setOpen(false)
-         }
-      })
+               setOpen(false)
+            }}
+
+      document.body.addEventListener('click', closePopup)
+
+      return ()=> {
+         document.body.removeEventListener('click', closePopup)
+      }
+      
    },[])
 
    return (
