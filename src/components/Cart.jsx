@@ -1,22 +1,28 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-
+import { clearItem } from '../redux/slices/cartSlice'
 import { Link } from 'react-router-dom'
 import CartItem from './CartItem'
 import '../scss/app.scss'
-import { clearItem } from '../redux/slices/cartSlice'
+import CartEmpty from './CartEmpty'
+
 
 
 function Cart() {
 
 const dispatch = useDispatch()
-const items = useSelector(state => state.cartSlice.items)
+const {totalPrice, items} = useSelector(state => state.cartSlice)
+const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
 const clearCart = () => {
    if(window.confirm('Вы уверены что хотите очистить корзину?')){
    dispatch(clearItem())
    }
 }
+   if(!totalPrice){
+      return <CartEmpty />
+   }
+   
 
    return (
       <><div className="container container--cart">
@@ -46,8 +52,8 @@ const clearCart = () => {
             </div>
             <div className="cart__bottom">
                <div className="cart__bottom-details">
-                  <span> Всего пицц: <b>1 шт.</b> </span>
-                  <span> Сумма заказа: <b>450 ₽</b> </span>
+                  <span> Всего пицц: <b>{totalCount} шт.</b> </span>
+                  <span> Сумма заказа: <b>{totalPrice} ₽</b> </span>
                </div>
                <div className="cart__bottom-buttons">
                   <Link to='/' className="button button--outline button--add go-back-btn">

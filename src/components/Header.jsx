@@ -21,6 +21,7 @@ function Header({ searchValue, setSearchValue }) {
                      <p>самая вкусная пицца во вселенной</p>
                   </Link>
                </div>
+               
                <Search searchValue={searchValue} setSearchValue={setSearchValue} />
                <div className="header__cart">
                   <Link to="/cart" >

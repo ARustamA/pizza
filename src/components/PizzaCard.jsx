@@ -21,7 +21,7 @@ function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
    const onClickAdd = () => {
       const item = { 
          id, imageUrl, title, price, 
-         sizes:activeSizesIndex, 
+         sizes:sizes[activeSizesIndex], 
          types:typeOfDough[pizzaFormIndex],
       }
       dispatch(addPizza(item))
