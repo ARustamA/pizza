@@ -19,7 +19,7 @@ function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
    const count = cartItem ? cartItem.count : 0
 
    const onClickAdd = () => {
-      const item = {
+      const item = { 
          id, imageUrl, title, price, 
          sizes:activeSizesIndex, 
          types:typeOfDough[pizzaFormIndex],

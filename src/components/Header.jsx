@@ -8,7 +8,7 @@ import '../scss/app.scss'
 
 function Header({ searchValue, setSearchValue }) {
    const {totalPrice, items } = useSelector((state) => state.cartSlice)
-
+   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
    return (
       <>
@@ -55,7 +55,7 @@ function Header({ searchValue, setSearchValue }) {
                               strokeLinejoin="round"
                            />
                         </svg>
-                        <span>{items.length}</span>
+                        <span>{totalCount}</span>
                      </div>
                   </Link>
                </div>
