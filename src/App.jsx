@@ -6,14 +6,10 @@ import Header from './components/Header'
 import Home from './components/Home'
 import NotFound from './components/NotFound'
 
-export const AppContext = React.createContext()
+
 function App() {
-  const [searchValue, setSearchValue] = React.useState('')
-  // const count = useSelector((state) => state.counter.value)
-  // const dispatch = useDispatch()
 
   return (
-    <AppContext.Provider value={{searchValue, setSearchValue}}>
       <div className="wrapper">
         <Header />
         <div className="content">
@@ -27,7 +23,6 @@ function App() {
             </Routes>
         </div>
       </div>
-    </AppContext.Provider>
   );
 }
 

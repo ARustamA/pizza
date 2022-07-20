@@ -1,8 +1,7 @@
 import React from 'react'
-import axios from 'axios'
 import qs from 'qs'
-import {useSelector, useDispatch} from 'react-redux'
-import {useNavigate} from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import Skeleton from './Skeleton'
 import PizzaCart from './PizzaCard'
@@ -10,73 +9,50 @@ import Categories from './Categories'
 import Sort from './Sort'
 import Pagination from './Pagination'
 import { setCategoriesId } from '../redux/slices/filterSlice'
-import { AppContext } from '../App'
+import { fetchPizza } from '../redux/slices/pizzaSlice'
 
-import '../scss/app.scss' 
-import { setItems } from '../redux/slices/pizzaSlice'
+import '../scss/app.scss'
+
 
 
 function Home() {
    const navigate = useNavigate()
-   const {categoriesId, sortIndex, pageCount } = useSelector((state) => state.filterSlice)
-   const items  = useSelector((state) => state.pizzaSlice.items)
-
-   const dispatch =  useDispatch()
+   const { categoriesId, sortIndex, pageCount, searchValue } = useSelector((state) => state.filterSlice)
+   const { items, status } = useSelector((state) => state.pizzaSlice)
+   const dispatch = useDispatch()
    const onClickCategories = (id) => { dispatch(setCategoriesId(id)) }
-
-
-   const [isLoading, setIsLoading] = React.useState(true)
-   const { searchValue } = React.useContext(AppContext)
-
-
+   // const { searchValue } = React.useContext(AppContext)
    // React.useEffect(() => {
    //    if (window.location.search) {
    //       const params = qs.parse(window.location.search.substring(1))
-         
    //       const sortFind = sortArr.find((obj) => obj.sortProperty === params.sortProperty)
-   //       // console.log('1',sortFind)
-         
-         
-   //       // dispatch(setFilters({
-   //       //    ...params, sortFind
-   //       //    })
-   //       // )
    //    }
    // },[])
 
-//получение пицц
-async function generalData() {
-   try {
-      setIsLoading(true)
+   //получение пицц
+   const generalData = async () => {
       const order = sortIndex.sortProperty.includes('-') ? 'asc' : 'desc'
       const sorty = sortIndex.sortProperty.replace('-', '')
       const category = categoriesId > 0 ? `category=${categoriesId}` : ''
       const search = searchValue ? `&search=${searchValue}` : ''
-      const { data } = await axios.get(`https://62cbce7d8042b16aa7c2c215.mockapi.io/items?page=${pageCount}&limit=4&${category}&sortBy=${sorty}&order=${order}${search}`)
 
-      dispatch(setItems(data))
-      
-   } catch (error) {
-      console.log(error)
-      alert('Не удалось выгрузить данные с сервера')
-   } finally{
-      setIsLoading(false)
+      dispatch(fetchPizza({
+         order, sorty, category, search, pageCount,
+      }))
    }
-}
-React.useEffect(() => {
-   
+   React.useEffect(() => {
       generalData()
       //  window.scrollTo(0, 0)
    }, [categoriesId, sortIndex.sortProperty, searchValue, pageCount])
 
 
-   React.useEffect(()=>{
+   React.useEffect(() => {
       const queryString = qs.stringify({
          sortProperty: sortIndex.sortProperty,
          categoriesId,
          pageCount
       })
-   navigate(`?${queryString}`)
+      navigate(`?${queryString}`)
       // console.log(queryString)
    }, [categoriesId, sortIndex.sortProperty, pageCount])
 
@@ -94,7 +70,23 @@ React.useEffect(() => {
                <Sort />
             </div>
             <div className="content__items">
-               {(isLoading ? skeletons : pizzasAr)}
+               {
+                  status === 'error' ?
+                     (<div className='content__error'>
+                        <h2> Произошла ошибка😕</h2>
+                        <p>
+                           Проверьте соединение с инетернетом, перезагрузите страницу.<br />
+                           Попробуйте зайти позже.
+                        </p>
+                     </div>) : (
+                        <>
+                           {status === 'loading' ? skeletons : pizzasAr}
+                        </>
+                     )
+
+
+               }
+
             </div>
             <Pagination />
          </div>

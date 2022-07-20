@@ -4,10 +4,11 @@ import {useSelector} from 'react-redux'
 import Search from './Search'
 
 import '../scss/app.scss'
+import { selectCart } from '../redux/slices/cartSlice'
 
 
 function Header({ searchValue, setSearchValue }) {
-   const {totalPrice, items } = useSelector((state) => state.cartSlice)
+   const {totalPrice, items } = useSelector(selectCart)
    const totalCount = items.reduce((sum, item) => sum + item.count, 0)
 
    return (
