@@ -313,8 +313,10 @@ body {
     text-align: center;
 
     h2 {
-      font-size: 32px;
-      margin-bottom: 10px;
+      font-size: 36px;
+      margin: 30px 10px;
+      font-weight: 600;
+
     }
 
     p {
@@ -322,12 +324,10 @@ body {
       line-height: 145.4%;
       letter-spacing: 0.01em;
       color: #777777;
+
     }
 
-    icon {
-      position: relative;
-      top: 2px;
-    }
+    
 
     img {
       display: block;
