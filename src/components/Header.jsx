@@ -19,8 +19,8 @@ function Header({ searchValue, setSearchValue }) {
                <div className="header__logo">
                   <img width="38" src="/img/pizza-logo.svg" alt="Pizza logo" />
                   <Link to=''>
-                     <h1>React Pizza</h1>
-                     <p>самая вкусная пицца во вселенной</p>
+                     <h1>Pizzagedon</h1>
+                     <p>побеждай свой голод c нашей пиццей </p>
                   </Link>
                </div>
             { (location.pathname !== "/cart") && (  

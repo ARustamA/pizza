@@ -63,7 +63,7 @@ function Home() {
    return (
       <>
          <div className="container">
-            <h2 className="content__title">Все пиццы</h2>
+            <h2 className="content__title">Мир пицц</h2>
             <div className="content__top">
                <Categories check={categoriesId}
                   onClickCategories={onClickCategories} />
