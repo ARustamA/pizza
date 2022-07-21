@@ -438,3 +438,42 @@ body {
     }
   }
 }
+
+.full__pizza{
+  display: flex;
+  height: 100%;
+  margin-bottom: 30px;
+  justify-content: space-between;
+    .full__pizza-title{
+      padding-right: 30px;
+      width: 600px;
+      text-align: center;
+      font-style: 30px; 
+      align-items: center;
+      
+    .pizza-block__image{
+      width: 400px;
+      height: 400px;
+    } 
+  
+  }
+  h2{
+      font-weight: 600;
+      margin: 20px;
+      text-align: center;
+      }
+  .descrip{
+    i{
+      font-weight: 600;
+      font-size: 24px;
+      
+    }
+    
+    p{
+    margin: 20px 10px;
+  }
+}
+
+  
+
+}
