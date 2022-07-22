@@ -1,20 +1,18 @@
 import React from 'react'
-
 import '../scss/app.scss'
 
 type CategoriesProps = {
    check: number;
-   onClickCategories: any;
-}
-
+   onClickCategories: (i:number) => void;
+} 
+const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
 const Categories: React.FC<CategoriesProps> = ({ check, onClickCategories }) => {
-
-   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
    return (
       <>
          <div className="categories" >
             <ul>
-               {  categories.map((name, index) => (<li key={index} onClick={() => onClickCategories(index)}
+               {  categories.map((name, index) => (
+                  <li key={index} onClick={() => onClickCategories(index)}
                      className={check === index ? 'active' : ''}>
                      {name}
                   </li>))}
@@ -22,6 +20,5 @@ const Categories: React.FC<CategoriesProps> = ({ check, onClickCategories }) => 
          </div>
       </>
    )
-
 }
 export default Categories

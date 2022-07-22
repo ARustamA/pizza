@@ -17,8 +17,7 @@ export const sortArr: SortItem [] = [
       { name: "цене(ASC)", sortProperty: "-price" },
       { name: "алфавиту(DESC)", sortProperty: "title" },
       { name: "алфавиту(ASC)", sortProperty: "-title" }]
-
-function Sort() {
+const Sort:React.FC = () => {
 
    const {sortIndex} = useSelector(selectSort)
    const dispatch =  useDispatch()
@@ -30,9 +29,11 @@ function Sort() {
    const [open, setOpen] = React.useState(false)
 
    React.useEffect(() => {
-      
-      const closePopup = (event: any) => {
-         if (!event.path.includes(sortRef.current)){
+      const closePopup = (event: MouseEvent) => {
+         const _event = event as MouseEvent &{
+            path:Node[]
+         }
+         if (sortRef.current && !_event.path.includes(sortRef.current)){
                setOpen(false)
             }}
 
