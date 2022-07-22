@@ -6,16 +6,25 @@ import {addPizza, selectCartItemById} from '../redux/slices/cartSlice'
 
 import '../scss/app.scss'
 
+type PizzaCartProps = {
+   id: string;
+   imageUrl: string;
+   title: string;
+   sizes: string[];
+   price: number[];
+   types: number[];
+   count: number;
+}
+const typeOfDough = ['тонкое', 'традиционное']
 
-function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
+const PizzaCart:React.FC<PizzaCartProps> = ({ id, imageUrl, title, price, sizes, types }) => {
    // const { items } = useSelector((state) => state.cartSlice)
 
    const dispatch = useDispatch()
    const [activeSizesIndex, setActiveSizesIndex] = React.useState(0)
    const [pizzaFormIndex, setPizzaFormIndex] = React.useState(0)
-   const typeOfDough = ['тонкое', 'традиционное']
+
    const cartItem = useSelector(selectCartItemById(id))
-         
    const count = cartItem ? cartItem.count : 0
 
    const onClickAdd = () => {
@@ -46,7 +55,7 @@ function PizzaCart({ id, imageUrl, title, price, sizes, types, }) {
                </ul>
                <ul>
                   {
-                     sizes.map((name, index) => (
+                     sizes.map((name:string, index:number) => (
                         <li key={index} onClick={() => setActiveSizesIndex(index)}
                            className={activeSizesIndex === index ? 'active' : ''}>{name} см.</li>))}
                </ul>

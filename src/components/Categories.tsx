@@ -2,9 +2,14 @@ import React from 'react'
 
 import '../scss/app.scss'
 
-function Categories({ check, onClickCategories }) {
-   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
+type CategoriesProps = {
+   check: number;
+   onClickCategories: any;
+}
 
+const Categories: React.FC<CategoriesProps> = ({ check, onClickCategories }) => {
+
+   const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
    return (
       <>
          <div className="categories" >

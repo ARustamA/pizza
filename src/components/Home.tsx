@@ -8,26 +8,19 @@ import PizzaCart from './PizzaCard'
 import Categories from './Categories'
 import Sort from './Sort'
 import Pagination from './Pagination'
-import { setCategoriesId } from '../redux/slices/filterSlice'
-import { fetchPizza } from '../redux/slices/pizzaSlice'
+import { setCategoriesId, selectSort } from '../redux/slices/filterSlice'
+import { fetchPizza, pizzaState } from '../redux/slices/pizzaSlice'
 
 import '../scss/app.scss'
 
 
 
-function Home() {
+const Home:React.FC = () => {
    const navigate = useNavigate()
-   const { categoriesId, sortIndex, pageCount, searchValue } = useSelector((state) => state.filterSlice)
-   const { items, status } = useSelector((state) => state.pizzaSlice)
+   const { categoriesId, sortIndex, pageCount, searchValue } = useSelector(selectSort)
+   const { items, status } = useSelector(pizzaState)
    const dispatch = useDispatch()
-   const onClickCategories = (id) => { dispatch(setCategoriesId(id)) }
-   // const { searchValue } = React.useContext(AppContext)
-   // React.useEffect(() => {
-   //    if (window.location.search) {
-   //       const params = qs.parse(window.location.search.substring(1))
-   //       const sortFind = sortArr.find((obj) => obj.sortProperty === params.sortProperty)
-   //    }
-   // },[])
+   const onClickCategories = (index:number) => { dispatch(setCategoriesId(index)) }
 
    //получение пицц
    const generalData = async () => {
@@ -36,7 +29,9 @@ function Home() {
       const category = categoriesId > 0 ? `category=${categoriesId}` : ''
       const search = searchValue ? `&search=${searchValue}` : ''
 
-      dispatch(fetchPizza({
+      dispatch(
+         //@ts-ignore
+      fetchPizza({
          order, sorty, category, search, pageCount,
       }))
    }
@@ -57,7 +52,7 @@ function Home() {
    }, [categoriesId, sortIndex.sortProperty, pageCount])
 
 
-   const pizzasAr = items.map((obj) => (<PizzaCart key={obj.id} {...obj} />))
+   const pizzasAr = items.map((obj:any) => (<PizzaCart key={obj.id} {...obj} />))
    const skeletons = [...new Array(pageCount)].map((_, i) => (<Skeleton key={i} />))
 
    return (

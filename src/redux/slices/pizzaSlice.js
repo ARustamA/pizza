@@ -35,5 +35,7 @@ const pizzaSlice = createSlice({
       state.items = [] }
    }
 })
+
+   export const pizzaState = (state) => state.pizzaSlice
    export const { setItems } = pizzaSlice.actions
    export default pizzaSlice.reducer

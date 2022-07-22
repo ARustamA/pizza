@@ -1,11 +1,16 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
-import {setSortItems } from '../redux/slices/filterSlice'
+import {setSortItems, selectSort} from '../redux/slices/filterSlice'
 
 import '../scss/app.scss'
 
-export const sortArr = [
+type SortItem = {
+   name:string;
+   sortProperty: string;
+}
+
+export const sortArr: SortItem [] = [
       { name: "популярности(DESC)", sortProperty: "rating" },
       { name: "популярности(ASC)", sortProperty: "-rating" },
       { name: "цене(DESC)", sortProperty: "price" },
@@ -15,10 +20,10 @@ export const sortArr = [
 
 function Sort() {
 
-   const sortIndex = useSelector((state) => state.filterSlice.sortIndex)
+   const {sortIndex} = useSelector(selectSort)
    const dispatch =  useDispatch()
-   const sortRef = React.useRef()
-   const onClickSort = (obj) => { 
+   const sortRef = React.useRef<HTMLDivElement>(null)
+   const onClickSort = (obj: SortItem) => { 
       dispatch(setSortItems(obj))
       setOpen(false)   }
    
@@ -26,7 +31,7 @@ function Sort() {
 
    React.useEffect(() => {
       
-      const closePopup = (event) => {
+      const closePopup = (event: any) => {
          if (!event.path.includes(sortRef.current)){
                setOpen(false)
             }}
@@ -36,11 +41,10 @@ function Sort() {
       return ()=> {
          document.body.removeEventListener('click', closePopup)
       }
-      
    },[])
 
    return (
-      <> <div className="sort" ref={sortRef}>
+      <> <div className="sort" ref = {sortRef}>
             <div className="sort__label" >
                <svg
                   width="10"

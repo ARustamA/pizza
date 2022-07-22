@@ -7,7 +7,6 @@ import Header from './components/Header'
 import Home from './components/Home'
 import NotFound from './components/NotFound'
 
-
 function App() {
 
   return (

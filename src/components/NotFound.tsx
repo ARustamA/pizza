@@ -1,6 +1,6 @@
-
+import React from 'react'
 import '../scss/app.scss'
-const NotFound = () => {
+const NotFound:React.FC = () => {
 
    return (
       <div className="m404">

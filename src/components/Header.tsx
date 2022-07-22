@@ -1,15 +1,17 @@
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
 import Search from './Search'
-
-import '../scss/app.scss'
 import { selectCart } from '../redux/slices/cartSlice'
+import '../scss/app.scss'
 
 
-function Header({ searchValue, setSearchValue }) {
+
+function Header () {
    const {totalPrice, items } = useSelector(selectCart)
-   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
+
+   const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
    const location = useLocation()
 
    return (
@@ -25,7 +27,7 @@ function Header({ searchValue, setSearchValue }) {
                </div>
             { (location.pathname !== "/cart") && (  
                <>
-               <Search searchValue={searchValue} setSearchValue={setSearchValue} />
+               <Search />
             
             <div className="header__cart">
                   <Link to="/cart" >
