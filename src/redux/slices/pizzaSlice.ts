@@ -1,7 +1,6 @@
 import { RootState } from './../store';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { SortType } from './filterSlice';
 
 type PizzaItem = {
    id: string;
@@ -66,7 +65,7 @@ const pizzaSlice = createSlice({
          },
       )
       builder.addCase(
-         fetchPizza.rejected, (state, action) => {
+         fetchPizza.rejected, (state) => {
             state.status = Status.ERROR
             state.items = []
          }

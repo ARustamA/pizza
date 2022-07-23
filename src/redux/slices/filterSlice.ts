@@ -24,7 +24,7 @@ interface FilterSliceState{
 
 const initialState: FilterSliceState = {
   categoriesId:  0,
-  sortIndex: { name: "популярности", sortProperty: EnamSort.PRICE_DESC },
+  sortIndex: { name: "популярности", sortProperty: EnamSort.RATING_DESC },
   pageCount : 1,
   searchValue: ''
 }

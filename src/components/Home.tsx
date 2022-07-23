@@ -21,7 +21,7 @@ const Home:React.FC = () => {
    const { categoriesId, sortIndex, pageCount, searchValue } = useSelector(selectSort)
    const { items, status } = useSelector(pizzaState)
    const dispatch = useAppDispatch()
-   const onClickCategories = (index:number) => { dispatch(setCategoriesId(index)) }
+   const onClickCategories = React.useCallback((index:number) => { dispatch(setCategoriesId(index))},[])
 
    //получение пицц
    const generalData = async () => {
