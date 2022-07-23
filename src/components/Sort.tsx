@@ -1,22 +1,23 @@
 import React from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 
-import {setSortItems, selectSort} from '../redux/slices/filterSlice'
+import {setSortItems, selectSort, EnamSort} from '../redux/slices/filterSlice'
 
 import '../scss/app.scss'
 
 type SortItem = {
    name:string;
-   sortProperty: string;
+   sortProperty: EnamSort
 }
 
 export const sortArr: SortItem [] = [
-      { name: "популярности(DESC)", sortProperty: "rating" },
-      { name: "популярности(ASC)", sortProperty: "-rating" },
-      { name: "цене(DESC)", sortProperty: "price" },
-      { name: "цене(ASC)", sortProperty: "-price" },
-      { name: "алфавиту(DESC)", sortProperty: "title" },
-      { name: "алфавиту(ASC)", sortProperty: "-title" }]
+      { name: "популярности(DESC)", sortProperty: EnamSort.RATING_DESC },
+      { name: "популярности(ASC)", sortProperty: EnamSort.RATING_ASC},
+      { name: "цене(DESC)", sortProperty: EnamSort.PRICE_DESC},
+      { name: "цене(ASC)", sortProperty: EnamSort.PRICE_ASC },
+      { name: "алфавиту(DESC)", sortProperty: EnamSort.TITLE_DESC },
+      { name: "алфавиту(ASC)", sortProperty: EnamSort.TITLE_ASC }]
+      
 const Sort:React.FC = () => {
 
    const {sortIndex} = useSelector(selectSort)
@@ -66,7 +67,7 @@ const Sort:React.FC = () => {
                <div className="sort__popup">
                   <ul>
                      { sortArr.map((obj, i) => (<li key={i} onClick={()=>onClickSort(obj)}
-                           className={sortIndex.sortProperty === obj ? 'active' : ''}>
+                           className={sortIndex.sortProperty === obj.sortProperty ? 'active' : ''}>
                            {obj.name}
                         </li>))}
                   </ul>

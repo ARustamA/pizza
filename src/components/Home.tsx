@@ -1,6 +1,6 @@
 import React from 'react'
 import qs from 'qs'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import Skeleton from './Skeleton'
@@ -12,6 +12,7 @@ import { setCategoriesId, selectSort } from '../redux/slices/filterSlice'
 import { fetchPizza, pizzaState } from '../redux/slices/pizzaSlice'
 
 import '../scss/app.scss'
+import { useAppDispatch } from '../redux/store'
 
 
 
@@ -19,7 +20,7 @@ const Home:React.FC = () => {
    const navigate = useNavigate()
    const { categoriesId, sortIndex, pageCount, searchValue } = useSelector(selectSort)
    const { items, status } = useSelector(pizzaState)
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const onClickCategories = (index:number) => { dispatch(setCategoriesId(index)) }
 
    //получение пицц
@@ -30,16 +31,14 @@ const Home:React.FC = () => {
       const search = searchValue ? `&search=${searchValue}` : ''
 
       dispatch(
-         //@ts-ignore
-      fetchPizza({
-         order, sorty, category, search, pageCount,
+         fetchPizza({
+            order, sorty, category, search, pageCount,
       }))
    }
    React.useEffect(() => {
       generalData()
       //  window.scrollTo(0, 0)
    }, [categoriesId, sortIndex.sortProperty, searchValue, pageCount])
-
 
    React.useEffect(() => {
       const queryString = qs.stringify({
@@ -78,10 +77,7 @@ const Home:React.FC = () => {
                            {status === 'loading' ? skeletons : pizzasAr}
                         </>
                      )
-
-
                }
-
             </div>
             <Pagination />
          </div>

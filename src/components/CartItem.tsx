@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDispatch} from 'react-redux'
-import { addPizza, deleteItem, minusPizza,  } from '../redux/slices/cartSlice'
+import { addPizza, CartItem, deleteItem, minusPizza,  } from '../redux/slices/cartSlice'
 
 type CartItemProps = {
    id: string;
@@ -12,18 +12,18 @@ type CartItemProps = {
    count: number;
 }
 
-const CartItem:React.FC<CartItemProps> = ({id, imageUrl, title, sizes, price,  types, count}) => {
+const CartItemComponent:React.FC<CartItemProps> = ({id, imageUrl, title, sizes, price,  types, count}) => {
    const dispatch = useDispatch()
 
    const onClickPlus = () =>{
-      dispatch(addPizza({ id }))
+      dispatch(addPizza({id} as CartItem))
    }
    const onClickMinus = () =>{
-      dispatch(minusPizza({ id }))
+      dispatch(minusPizza(id))
    }
    const onDeletePizza = () =>{
       if(window.confirm('Вы уверены что хотите убрать пиццу из заказа?')){
-         dispatch(deleteItem({ id }))
+         dispatch(deleteItem(id))
       }
    }
    return (
@@ -67,4 +67,4 @@ const CartItem:React.FC<CartItemProps> = ({id, imageUrl, title, sizes, price,  t
    )
 }
 
-export default CartItem
+export default CartItemComponent
